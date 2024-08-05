@@ -2,6 +2,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import FileUpload from './FileUpload'
+import Camera from './Camera'
+import Geolocation from './Geolocation'
 
 function App() {
 
@@ -20,6 +22,15 @@ function App() {
       <div className="card">
 
         <FileUpload />
+
+        <h1>Camera Access Example</h1>
+        <Camera />
+
+
+        <h1>Geolocation Access</h1>
+        <Geolocation />
+
+
 
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
