@@ -7,7 +7,16 @@ import Geolocation from './Geolocation'
 
 function App() {
 
+  useEffect(()=>{
 
+     window.addEventListener("message", (event) => {
+        const data = event.data;
+        document.body.style.backgroundColor = 'red';
+        alert("Data received from React Native:", data);
+      });
+  },[])
+
+  
   return (
     <>
       <div>
