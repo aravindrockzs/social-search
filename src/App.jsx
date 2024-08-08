@@ -11,6 +11,7 @@ function App() {
   useEffect(()=>{
 
      document.addEventListener("message", (event) => {
+       console.log(event);
         const data = event.data;
         document.body.style.backgroundColor = 'red';
         alert("Data received from React Native:", data);
