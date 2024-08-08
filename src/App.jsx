@@ -11,7 +11,7 @@ function App() {
   useEffect(()=>{
     function handleEvent(message) {
       console.log(message.data);
-      alert(JSON.parse(message.data))
+      alert(message.data)
     }
 
     // This will only work for Android
