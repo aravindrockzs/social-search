@@ -16,10 +16,10 @@ function App() {
 
     // This will only work for Android
     // https://stackoverflow.com/a/58118984
-    window.addEventListener("message", handleEvent);
+    document.addEventListener("message", handleEvent);
 
     return () =>
-      window.removeEventListener("message", handleEvent);
+      document.removeEventListener("message", handleEvent);
   },[])
 
   
