@@ -9,11 +9,16 @@ import Geolocation from './Geolocation'
 function App() {
 
   useEffect(()=>{
-    function handleEvent(message) {
-      console.log(message.data);
-      alert(JSON.parse(message.data))
+  function handleEvent(message) {
+    try {
+      const data = JSON.parse(message.data);
+      console.log(data);
+      alert(data);
+    } catch (error) {
+      console.error("Failed to parse message data:", error);
+      alert("Received invalid data");
     }
-
+  }
     // This will only work for Android
     // https://stackoverflow.com/a/58118984
     document.addEventListener("message", handleEvent);
