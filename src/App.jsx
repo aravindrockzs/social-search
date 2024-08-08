@@ -9,13 +9,16 @@ import Geolocation from './Geolocation'
 function App() {
 
   useEffect(()=>{
+    function handleEvent(message) {
+      console.log(message.data);
+    }
 
-     document.addEventListener("message", (event) => {
-       console.log(event);
-        const data = event.data;
-        document.body.style.backgroundColor = 'red';
-        alert("Data received from React Native:", data);
-      });
+    // This will only work for Android
+    // https://stackoverflow.com/a/58118984
+    document.addEventListener("message", handleEvent);
+
+    return () =>
+      document.removeEventListener("message", handleEvent);
   },[])
 
   
