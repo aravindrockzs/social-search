@@ -22,10 +22,10 @@ function App() {
     }
     // This will only work for Android
     // https://stackoverflow.com/a/58118984
-    window.addEventListener("MyEvent", handleEvent);
+    window.addEventListener('getGeolocation', handleEvent);
 
     return () =>
-      window.removeEventListener("MyEvent", handleEvent);
+      window.addEventListener('getGeolocation', handleEvent);
   }, [])
 
 
