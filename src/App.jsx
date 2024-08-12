@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -8,24 +8,47 @@ import Geolocation from './Geolocation'
 
 function App() {
 
+  const [sampleImg, setSampleImg] = useState(null)
+
   useEffect(() => {
     function handleEvent(event) {
 
-      try {
+      let type = event.type
 
-        console.log(event.detail);
-        alert(event.detail)
-      } catch (error) {
-        console.error("Failed to parse message data:", error);
-        alert("Received invalid data");
+      if (type === 'getGeolocation') {
+        try {
+          console.log(event.detail);
+          alert(event.detail)
+        } catch (error) {
+          console.error("Failed to parse message data:", error);
+          alert("Received invalid data");
+        }
       }
-    }
-    // This will only work for Android
-    // https://stackoverflow.com/a/58118984
-    window.addEventListener('getGeolocation', handleEvent);
 
-    return () =>
-      window.addEventListener('getGeolocation', handleEvent);
+      if (type === 'getBase64Image') {
+
+        alert('base64img is received')
+        alert(event.detail)
+        console.log(event.detail);
+        setSampleImg(event.detail)
+
+      }
+
+
+    }
+
+    window.addEventListener('getGeolocation', handleEvent);
+    window.addEventListener('getBase64Image', handleEvent);
+
+
+
+    return () => {
+
+      window.removeEventListener('getGeolocation', handleEvent);
+      window.removeEventListener('getBase64Image', handleEvent);
+    }
+
+
   }, [])
 
 
@@ -45,7 +68,7 @@ function App() {
         <FileUpload />
 
         <h1>Camera Access Example</h1>
-        <Camera />
+        <Camera sampleImg={sampleImg} />
 
 
         <h1>Geolocation Access</h1>

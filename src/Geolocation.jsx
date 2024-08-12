@@ -5,28 +5,14 @@ const Geolocation = () => {
 	const [location, setLocation] = useState({ latitude: null, longitude: null });
 	const [error, setError] = useState(null);
 
-	const handleGetLocation = () => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					setLocation({
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
-					});
-				},
-				(error) => {
-					setError(error.message);
-				}
-			);
-		} else {
-			setError('Geolocation is not supported by this browser.');
-		}
+	const getLocationRN = () => {
+		window.ReactNativeWebView.postMessage("getLocationRN")
 	};
 
 	return (
 		<div>
 			<h2>Geolocation</h2>
-			<button onClick={handleGetLocation}>Get Location</button>
+			<button onClick={getLocationRN}>Get Location</button>
 			{location.latitude && location.longitude ? (
 				<div>
 					<h3>Your Location:</h3>

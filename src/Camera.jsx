@@ -1,43 +1,39 @@
 import { useRef, useState, useEffect } from 'react';
 
-const Camera = () => {
-	const videoRef = useRef(null);
-	const canvasRef = useRef(null);
-	const [capturedImage, setCapturedImage] = useState(null);
-
+const Camera = ({ sampleImg }) => {
 	useEffect(() => {
-		const getUserMedia = async () => {
-			try {
-				const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-				if (videoRef.current) {
-					videoRef.current.srcObject = stream;
-				}
-			} catch (error) {
-				console.error('Error accessing camera: ', error);
-			}
-		};
+		console.log(sampleImg)
+	}, [sampleImg]);
 
-		getUserMedia();
-	}, []);
 
-	const capture = () => {
-		const context = canvasRef.current.getContext('2d');
-		context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
-		setCapturedImage(canvasRef.current.toDataURL('image/png'));
+	const getCameraRN = () => {
+		window.ReactNativeWebView.postMessage("getCameraRN")
 	};
+
+	const imageSrc = sampleImg && !sampleImg.startsWith('data:image/')
+		? `data:image/jpeg;base64,${sampleImg}`
+		: sampleImg;
+
 
 	return (
 		<div>
 			<h2>Camera Access</h2>
-			<video ref={videoRef} autoPlay style={{ width: '100%', height: 'auto' }} />
-			<button onClick={capture}>Capture Photo</button>
-			<canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480" />
-			{capturedImage && (
-				<div>
-					<h3>Captured Image:</h3>
-					<img src={capturedImage} alt="Captured" />
-				</div>
+
+			{/* Display image if sampleImg is provided and is valid */}
+
+
+			{sampleImg ? (
+				<img
+					src={imageSrc}
+					alt="Captured"
+					style={{ maxWidth: '100%', maxHeight: '500px' }} // Adjust as needed
+				/>
+			) : (
+				<p>No image captured yet.</p>
 			)}
+
+			<button onClick={getCameraRN}>Capture Photo</button>
+
 		</div>
 	);
 };
